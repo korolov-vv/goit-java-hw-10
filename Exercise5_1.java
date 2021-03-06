@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,7 +10,6 @@ public  class Exercise5_1 {
     public static void main(String[] args) {
         Stream<String> s1 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "G", "K"});
         Stream<String> s2 = Arrays.stream(new String[]{"L", "M", "N", "O", "P", "Q", "R"});
-
         System.out.println(zipp(s1, s2).collect(Collectors.toList()).toString());
     }
 
@@ -34,7 +33,6 @@ public  class Exercise5_1 {
         return result.stream();
     }
 
-
     static class MyThread<T> implements Runnable {
 
         Stream<String> stream;
@@ -46,26 +44,26 @@ public  class Exercise5_1 {
         private final static Object MONITOR = new Object();
         @Override
         public void run() {
-            stream.parallel().iterator().forEachRemaining((t) -> {
+            stream.forEach((t) -> {
                 synchronized (MONITOR) {
                     addElementsFromStreramToList(t);
                 }
-
-                sleepThread();
+                sleepThread(100);
             });
 
         }
 
         public void addElementsFromStreramToList(String t){
-            result.add(t);
+            Exercise5_1.result.add(t);
         }
 
-        public void sleepThread(){
+        public void sleepThread(int millis){
             try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                System.out.println(e.toString());
+                Thread.sleep(millis);
+            } catch (IllegalStateException | InterruptedException ie) {
+                System.out.println(ie.getMessage());
             }
         }
     }
+
 }
