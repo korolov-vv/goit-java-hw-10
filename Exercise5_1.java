@@ -1,14 +1,12 @@
-import java.util.ArrayList;
-
 import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public  class Exercise5_1 {
-    static List<String> result = new ArrayList<>();
+public class Exercise5_1 {
+    static Stream<String> resultstream = Stream.empty();
+
     public static void main(String[] args) {
-        Stream<String> s1 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "G", "K"});
+        Stream<String> s1 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"});
         Stream<String> s2 = Arrays.stream(new String[]{"L", "M", "N", "O", "P", "Q", "R"});
         System.out.println(zipp(s1, s2).collect(Collectors.toList()).toString());
     }
@@ -18,19 +16,21 @@ public  class Exercise5_1 {
         Thread thread1 = new Thread(new MyThread<java.lang.String>((Stream<java.lang.String>) first));
         Thread thread2 = new Thread(new MyThread<java.lang.String>((Stream<java.lang.String>) second));
 
-        Thread[] threads = new Thread[] {thread1, thread2};
-        thread1.start();
-        thread2.start();
+        Thread[] threads = new Thread[]{thread1, thread2};
+
+        for (Thread thr : threads) {
+            thr.start();
+        }
 
         for (Thread thread : threads) {
             try {
                 thread.join();
-            }catch (InterruptedException i){
+            } catch (InterruptedException i) {
                 System.out.println(i.toString());
             }
         }
 
-        return result.stream();
+        return resultstream;
     }
 
     static class MyThread<T> implements Runnable {
@@ -42,22 +42,22 @@ public  class Exercise5_1 {
         }
 
         private final static Object MONITOR = new Object();
+
         @Override
         public void run() {
             stream.forEach((t) -> {
                 synchronized (MONITOR) {
-                    addElementsFromStreramToList(t);
+                    addElementsFromStreramToResultStream(t);
                 }
-                sleepThread(100);
+                sleepThread(50);
             });
-
         }
 
-        public void addElementsFromStreramToList(String t){
-            Exercise5_1.result.add(t);
+        public void addElementsFromStreramToResultStream(String t) {
+                resultstream = Stream.concat(resultstream, Stream.of(t));
         }
 
-        public void sleepThread(int millis){
+        public void sleepThread(int millis) {
             try {
                 Thread.sleep(millis);
             } catch (IllegalStateException | InterruptedException ie) {

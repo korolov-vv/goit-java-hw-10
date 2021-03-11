@@ -12,10 +12,8 @@ public class Test {
         long c = 11;
         long m = (long) Math.pow(2, 48);
         long limit = 10;
-        Stream<String> s1 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "G", "K"});
+        Stream<String> s1 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"});
         Stream<String> s2 = Arrays.stream(new String[]{"L", "M", "N", "O", "P", "Q", "R"});
-        Stream<String> s3 = Arrays.stream(new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I", "G", "K"});
-        Stream<String> s4 = Arrays.stream(new String[]{"L", "M", "N", "O", "P", "Q", "R"});
 
 
         System.out.println("Exercise 1 result:");
@@ -23,11 +21,11 @@ public class Test {
 
         System.out.println();
         System.out.println("Exercise 2 result:");
-        System.out.println(new Exercise2().changed(names).toString());
+        System.out.println(new Exercise2().changed(names));
 
         System.out.println();
         System.out.println("Exercise 3 result:");
-        new Exercise3().sortNumbers(numbers);
+        System.out.println(new Exercise3().sortNumbers(numbers));
 
         System.out.println();
         System.out.println("Exercise 4 result:");
@@ -38,9 +36,5 @@ public class Test {
         System.out.println("\n");
         System.out.println("Exercise 5 result:");
         System.out.println(Exercise5.zip(s1, s2).collect(Collectors.joining(" ")));
-
-        System.out.println();
-        System.out.println("Exercise 5 with multi thread result:");
-        System.out.println(Exercise5_1.zipp(s3, s4).collect(Collectors.toList()).toString());
     }
 }

@@ -10,6 +10,6 @@ public class Exercise1 {
         return list.stream()
                 .filter(Objects::nonNull)
                 .filter((name) -> list.indexOf(name) % 2 != 0)
-                .map((name) -> list.indexOf(name) + ". " + name).collect(Collectors.joining(", ")).toString();
+                .map((name) -> list.indexOf(name) + ". " + name).collect(Collectors.joining(", "));
     }
 }
